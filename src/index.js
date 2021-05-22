@@ -1,14 +1,23 @@
+import templateOrderEat from "./templates/service-order-eat.hbs";
+import menu from "./menu.json";
+
 const Theme = {
   LIGHT: "light-theme",
   DARK: "dark-theme",
 };
 
+const markup = templateOrderEat(menu);
+
 const refs = {
   checkboxEl: document.querySelector("#theme-switch-toggle"),
+  listEl: document.querySelector(".js-menu"),
   bodyEl: document.body,
 };
 
+setBackgroud();
+
 refs.checkboxEl.addEventListener("change", onInputCheck);
+refs.listEl.insertAdjacentHTML("beforeend", markup);
 
 function onInputCheck(event) {
   if (event.target.checked) {
@@ -19,20 +28,15 @@ function onInputCheck(event) {
 }
 
 function saveDataLocalStorage(backgorund) {
-  removePrevBackgound();
   localStorage.setItem("theme", backgorund);
   setBackgroud();
 }
 
-function removePrevBackgound() {
-  if (!localStorage.getItem("theme")) return;
-  const prevClass = localStorage.getItem("theme");
-
-  refs.bodyEl.classList.remove(prevClass);
-}
-
 function setBackgroud() {
   if (!localStorage.getItem("theme")) return;
+
+  refs.bodyEl.removeAttribute("class");
+
   const classBody = localStorage.getItem("theme");
 
   if (classBody === Theme.LIGHT) refs.checkboxEl.checked = false;
@@ -40,5 +44,3 @@ function setBackgroud() {
 
   refs.bodyEl.classList.add(classBody);
 }
-
-setBackgroud();
