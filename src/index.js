@@ -33,7 +33,8 @@ function saveDataLocalStorage(backgorund) {
 }
 
 function setBackgroud() {
-  if (!localStorage.getItem("theme")) return;
+  if (!localStorage.getItem("theme"))
+    localStorage.setItem("theme", Theme.LIGHT);
 
   refs.bodyEl.removeAttribute("class");
 
